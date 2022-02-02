@@ -27,11 +27,14 @@ jobs:
       - run: env
         shell: bash
       - run: ${{ env.Qt5_DIR }}/bin/qmake.exe -config release QuteScoop.pro
+        shell: bash
       - run: make 
+        shell: bash
       - run: make install
+        shell: bash
       - working-directory: DIST-win64
         run: ${{ env.Qt5_DIR }}/bin/windeployqt.exe 
-      - run: windeployqt DIST-win64
+        shell: bash
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
