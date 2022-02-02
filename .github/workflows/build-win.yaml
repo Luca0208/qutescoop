@@ -42,6 +42,8 @@ jobs:
         with:
           name: QuteScoop-Win-${{ steps.tag.outputs.SOURCE_NAME }}-${{ github.sha }}-Makefile
           path: ./Makefile*
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - run: |
           call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
           ${{ env.Qt5_DIR }}\bin\make.exe install
