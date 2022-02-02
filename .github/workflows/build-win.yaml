@@ -28,7 +28,7 @@ jobs:
         shell: bash
       - run: |
           call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          qmake.exe -config release QuteScoop.pro
+          ${{ env.Qt5_DIR }}\bin\qmake.exe -config release QuteScoop.pro
         shell: cmd
       - run: make 
         shell: bash
