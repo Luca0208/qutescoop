@@ -18,27 +18,22 @@ jobs:
           echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
           echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
         shell: bash
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v1
-        with:
-          path: ../Qt
-          key: ${{ runner.os }}-5151-mingw81-QtCache
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.9.0
+        uses: jurplel/install-qt-action@v2
         with:
-          version: 5.15.1
-          arch: win64_mingw81
+          version: 5.15.2
+          arch: win64_msvc2019_64
           modules: qtwebglplugin
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
       - run: env
         shell: bash
-      - run: qmake -config release QuteScoop.pro
+      - run: ${{ env.Qt5_DIR }}/bin/qmake.exe -config release QuteScoop.pro
       - run: make 
       - run: make install
-      - run: windeployqt DIST-win32
+      - working-directory: DIST-win64
+        run: ${{ env.Qt5_DIR }}/bin/windeployqt.exe 
+      - run: windeployqt DIST-win64
       - name: Upload
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: QuteScoop-Win-${{ steps.tag.outputs.SOURCE_NAME }}-${{ github.sha }}.zip
-          path: ./DIST-win32
+          path: ./DIST-win64
