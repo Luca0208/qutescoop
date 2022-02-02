@@ -47,8 +47,10 @@ jobs:
           nmake.exe install
         shell: cmd
       - working-directory: DIST-win64
-        run: ${{ env.Qt5_DIR }}/bin/windeployqt.exe 
-        shell: bash
+        run: |
+          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          ${{ env.Qt5_DIR }}/bin/windeployqt.exe . 
+        shell: cmd
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
