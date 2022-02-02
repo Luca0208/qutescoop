@@ -31,7 +31,6 @@ jobs:
           arch: win32_msvc2019
           modules: qtwebglplugin
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
-      - run: echo "::add-path::C:\msys64\mingw32\bin"
       - run: env
         shell: bash
       - run: |
