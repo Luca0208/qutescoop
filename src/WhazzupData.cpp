@@ -97,8 +97,8 @@ WhazzupData::WhazzupData(QByteArray* bytes, WhazzupType type):
     } else if(type == ATCBOOKINGS) {
         QJsonArray json = data.array();
         for(int i = 0; i < json.size(); ++i) {
-            QJsonObject bookedControllerObject = json[i].toObject();
-            BookedController *bc = new BookedController(bookedControllerObject, this);
+            QJsonObject bookedControllerJson = json[i].toObject();
+            BookedController *bc = new BookedController(bookedControllerJson, this);
             bookedControllers.append(bc);
         }
         bookingsTime = QDateTime::currentDateTime();
